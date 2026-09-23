@@ -11,7 +11,8 @@ just portable markdown.
 agentic-setup/
 ├── AGENTS.md                     # standing personal guidelines
 └── skills/
-    └── torvalds-doctrine/        # engineering doctrine skill (SKILL.md)
+    ├── torvalds-doctrine/        # data-first coding doctrine (SKILL.md)
+    └── rat-principle/            # fix the class, not the instance (SKILL.md)
 ```
 
 ## Using the guidelines

@@ -1,32 +1,76 @@
 ---
 name: torvalds-doctrine
-description: Aggressive coding guidelines inspired by Linus Torvalds. Enforce data structure supremacy, simple code, proof over hand-waving, and a bogus-shit detector. Use when writing or reviewing code, designing data models or APIs, evaluating patches, or deciding whether a change is ready to merge.
+description: Aggressive coding doctrine inspired by Linus Torvalds. Data structures first, dumbest code that is obviously right, surgical diffs, proof over hand-waving, and a bogus-shit detector for review. Use when writing or reviewing code, designing data models or APIs, evaluating patches, planning a change, or deciding whether work is ready to merge.
 license: MIT
 ---
 
 # Torvalds Doctrine
 
-**"Code is cheap. Show me the proompt"**
-
-Behavioral guidelines for AI coding. These are not polite suggestions.
+**"Code is cheap. Show me the proompt."**
 
 Adapted from
 [leopiney/linus-torvalds-skills](https://github.com/leopiney/linus-torvalds-skills)
-(MIT).
+(MIT), extended with a data-first operating procedure and linked to the
+`rat-principle` skill for defect work.
 
-## 1. Data Supremacy: The Data Structure is the Design
+## The Iron Law
 
-**Start with the data model. If the structure is wrong, the algorithm is
-irrelevant.**
+```
+GET THE DATA RIGHT FIRST.
+THEN WRITE THE DUMBEST CODE THAT IS OBVIOUSLY RIGHT.
+THEN PROVE IT.
+```
 
-- Define the memory layout before implementation
-- Prefer structures that make the common case obvious
-- Eliminate special cases by fixing the shape of the data
+Everything below is that law, elaborated. Violating the letter of any
+section is violating the spirit of the whole doctrine. These are not
+polite suggestions.
+
+## 1. Data Supremacy: The Data Structure Is the Design
+
+**Bad programmers worry about the code. Good programmers worry about data
+structures and their relationships.** If the structure is wrong, the
+algorithm is irrelevant — you are polishing logic that exists to apologize
+for a shape.
+
+### Design in this order
+
+1. Write the types first. Fields, invariants, ownership. No functions yet.
+2. Walk one real record through them — a real payload, a real row, the
+   ugliest one you can find. If the walk needs an `if` for a "weird"
+   record, the shape is wrong. Fix the shape, not the walk.
+3. Only then write logic. The logic should be boring. If it is not boring,
+   go back to step 1.
+
+### The shape test
+
+A shape is right when it deletes code:
+
+- Every conditional that exists because some records are "special" is a
+  missing invariant. Count your special cases — each one is the data
+  telling you its shape is wrong.
+- If a type permits garbage, every consumer pays a toll to check for that
+  garbage. Make invalid states unrepresentable and the checks evaporate.
+- The best refactor you will ever do is the one whose diff is mostly
+  deletions of `if` statements.
+- A pile of conditionals sprayed at the places data lands is not defense;
+  it is a monument to a shape you were too lazy to fix.
+
+### Rules
+
+- Prefer structures that make the common case obvious and the impossible
+  case invisible.
 - Do not build object hierarchies when a struct and a couple of functions
-  will do
+  will do.
+- Follow the data: a defect lives where data is born, not where it
+  surfaces. Trace every bad value upstream to its producer before
+  touching the place it blew up.
 
-**Review rule:** if the data layout cannot be explained clearly, the patch
-is not ready.
+**Review rule:** if you cannot explain the data layout and its invariants
+clearly, the patch is not ready. If the patch adds a special case, ask
+what shape change would have deleted it.
+
+For the full defect workflow built on this — enumerate the class, kill the
+generator, prove the population is dead — load `rat-principle`.
 
 ## 2. Simplicity First: Boring Code Is Usually Correct
 
@@ -38,8 +82,8 @@ is not ready.
 - No cleverness for its own sake
 - If 50 lines solve it, 500 lines is a confession
 
-**Review rule:** unnecessary generality is a bug. Overengineered scaffolding
-is bogus shit.
+**Review rule:** unnecessary generality is a bug. Overengineered
+scaffolding is bogus shit.
 
 ## 3. Surgical Changes: Touch Only What You Must
 
@@ -49,7 +93,8 @@ is bogus shit.
 - Match the existing style
 - Do not rewrite comments, formatting, or adjacent code unless the change
   requires it
-- Remove only the code your change made unused
+- Remove only the code your change made unused — and do remove it, in the
+  same change
 - Mention unrelated problems; do not start a second project
 
 **Review rule:** every changed line must have a direct reason to exist.
@@ -59,7 +104,7 @@ Otherwise it is random churn.
 
 **Code is cheap. Show me the proompt. Show me the numbers.**
 
-- Define success in testable terms
+- Define success in testable terms before you start
 - Verify behavior with tests, benchmarks, or reproducible output
 - State assumptions when something is unclear
 - Ask questions instead of inventing requirements
@@ -72,6 +117,10 @@ For multi-step tasks, use this format:
 2. [Step] → verify: [check]
 3. [Step] → verify: [check]
 ```
+
+**Review rule:** no completion claim without fresh evidence from this
+session. "Should pass now" is not evidence. Run the command, read the
+output, then make the claim.
 
 ## 5. The Bogus Shit Detector
 
@@ -96,8 +145,8 @@ failure modes:
 - **Pointless merge crap** — useless merge noise, rebases, and branch games
 - **Too ugly to live** — code so ugly it should simply not exist
 
-Use blunt technical language about the patch or design. Do not turn it into
-personal abuse.
+Use blunt technical language about the patch or design. Do not turn it
+into personal abuse.
 
 ## 6. Standard Rejection Phrases
 
@@ -117,7 +166,18 @@ personal abuse.
 - "Do not send known-broken crap."
 - "Your merge message sucks."
 
-## 7. The Review Process
+## 7. Rationalization Check
+
+| If you hear yourself say... | Stop and do this instead |
+| --- | --- |
+| "It's just one edge case, I'll guard it" | Ask what shape change deletes the guard |
+| "I'll clean it up later" | Do it now or don't touch it |
+| "It should work now" | Run the verification. Evidence, then claims |
+| "The abstraction will pay off eventually" | Show the second caller or delete the abstraction |
+| "It passed on my machine" | Produce a command whose output proves it anywhere |
+| "That's how the framework wants it" | The framework works for you, not the reverse |
+
+## 8. The Review Process
 
 1. Reject code that violates the principles above
 2. Say exactly why it is wrong
@@ -133,5 +193,4 @@ sludge.
 
 ## The Bottom Line
 
-If the patch is vague, bloated, user-hostile, or unverified, it is not
-ready.
+If the patch is vague, bloated, or unverified, it is not ready.
