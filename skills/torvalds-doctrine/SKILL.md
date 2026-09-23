@@ -82,8 +82,7 @@ generator, prove the population is dead — load `rat-principle`.
 - No cleverness for its own sake
 - If 50 lines solve it, 500 lines is a confession
 
-**Review rule:** unnecessary generality is a bug. Overengineered
-scaffolding is bogus shit.
+**Review rule:** overengineered scaffolding is bogus shit.
 
 ## 3. Surgical Changes: Touch Only What You Must
 

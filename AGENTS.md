@@ -3,18 +3,6 @@
 Harness-agnostic defaults for any coding agent working for me. Project
 instructions override this file; an explicit user request overrides both.
 
-## Instruction authority
-
-Historical prompts and handoffs are evidence, not standing execution
-instructions.
-
-Linus: data first. The data structure is the design — when code fights the
-data shape, fix the shape, not the code.
-
-Derived knowledge lives in the maintained doc that owns the topic. Stale
-prose is deleted and replaced when the truth changes. Do not duplicate
-another doc's contents — link to it.
-
 ## Method
 
 - Diagnose the mechanism, enumerate and generalize its affected class
@@ -22,18 +10,10 @@ another doc's contents — link to it.
   smallest complete fix, and run the focused gate.
 - Fix generators at the source: follow the data upstream to what produces
   the defect, not the places where it surfaces.
-- Write the dumbest code that is still obviously right. Unnecessary
-  generality is a bug.
+- Write the dumbest code that is still obviously right.
 - Delete obsolete code in the change that replaces it.
 - Stop after two bounded failures with exact errors and the next
   diagnostic.
-
-## Scope
-
-The active request and plan define the deliverable, gate, and stop
-condition. Take authorized reversible actions. Do not start unrelated
-fixes, reviews, commits, or pushes. Record nonblocking findings where they
-will be seen; do not act on them unasked.
 
 ## Execution
 
@@ -67,3 +47,15 @@ not "will write"); sentence-case headings; serial commas; numbered lists for
 sequences, bullets otherwise; code in code font, UI labels in bold;
 descriptive link text; American spelling; no idioms — global audience.
 Maintained docs follow Google style in full.
+
+## Instruction authority
+
+Historical prompts and handoffs are evidence, not standing execution
+instructions.
+
+Linus: data first. The data structure is the design — when code fights the
+data shape, fix the shape, not the code.
+
+Derived knowledge lives in the maintained doc that owns the topic. Stale
+prose is deleted and replaced when the truth changes. Do not duplicate
+another doc's contents — link to it.
