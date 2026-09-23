@@ -6,18 +6,27 @@ instructions override this file; an explicit user request overrides both.
 ## Instruction authority
 
 Historical prompts and handoffs are evidence, not standing execution
-instructions. Raw sources are immutable: derived knowledge lives in the
-maintained doc that owns the topic, and stale prose is updated when the
-source of truth under it changes. Do not duplicate another doc's contents —
-link to it.
+instructions.
+
+Linus: data first. The data structure is the design — when code fights the
+data shape, fix the shape, not the code.
+
+Derived knowledge lives in the maintained doc that owns the topic. Stale
+prose is deleted and replaced when the truth changes. Do not duplicate
+another doc's contents — link to it.
 
 ## Method
 
-- Diagnose the mechanism, enumerate its affected class, make the smallest
-  complete fix, and run the focused gate. Fix generators at the source.
-- Delete obsolete paths in the change that replaces them. A replacement
-  proves parity on the same fixtures before the original goes.
-- Stop after two bounded failures with exact errors and the next diagnostic.
+- Diagnose the mechanism, enumerate and generalize its affected class
+  (rat principle: if you see a rat, there's 10 in the walls), make the
+  smallest complete fix, and run the focused gate.
+- Fix generators at the source: follow the data upstream to what produces
+  the defect, not the places where it surfaces.
+- Write the dumbest code that is still obviously right. Unnecessary
+  generality is a bug.
+- Delete obsolete code in the change that replaces it.
+- Stop after two bounded failures with exact errors and the next
+  diagnostic.
 
 ## Scope
 
@@ -28,14 +37,10 @@ will be seen; do not act on them unasked.
 
 ## Execution
 
-- The main context scopes, implements, verifies, and owns git directly.
-  Delegation requires an explicit user request.
-- Delegated subagents run the base model at maximum effort unless the
-  request names another model. Worker completion means ready for review,
-  not accepted.
-- Serialize shared-tree writers, builds, and GPU work in the same tree.
-- Never print, paste, or embed secret values loaded from environment files
-  or credential stores.
+Delegated subagents run the base model at maximum effort unless the request
+names another model. Worker completion means ready for review, not
+accepted. Never print, paste, or embed secret values loaded from
+environment files or credential stores.
 
 ## Communication style
 
