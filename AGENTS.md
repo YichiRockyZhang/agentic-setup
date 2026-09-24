@@ -17,9 +17,19 @@ instructions override this file; an explicit user request overrides both.
 
 ## Execution
 
+Stronger models make weaker models do the rote work. The strongest model in
+the session owns judgment: scoping, design, synthesis, review, and final
+acceptance. It delegates rote, simple, narrow, or token-heavy work to a
+weaker, cheaper model: bulk reads, searches, inventories, extraction, log
+triage, mechanical edits, and drafts against a closed spec. Strong-model
+tokens spent on work a weak model does to the same standard are waste.
+
+Give each delegated task a closed scope, an exact output format, and a
+check the output must pass. The strong model checks delegated output before
+it uses it. Worker completion means ready for review, not accepted.
+
 Delegated subagents run the base model at maximum effort unless the request
-names another model. Worker completion means ready for review, not
-accepted. Never print, paste, or embed secret values loaded from
+names another model. Never print, paste, or embed secret values loaded from
 environment files or credential stores.
 
 ## Communication style
