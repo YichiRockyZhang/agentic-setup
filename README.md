@@ -10,10 +10,20 @@ just portable markdown.
 ```
 agentic-setup/
 ├── AGENTS.md                     # standing personal guidelines
-└── skills/
-    ├── torvalds-doctrine/        # data-first coding doctrine (SKILL.md)
-    └── rat-principle/            # fix the class, not the instance (SKILL.md)
+├── skills/                       # general skills, any project
+│   ├── torvalds-doctrine/        # data-first coding doctrine
+│   ├── rat-principle/            # fix the class, not the instance
+│   ├── deslop/                   # cleanup conductor: baseline, then organize and reduce
+│   ├── deslop-organize/          # every file one home: layout, docs, module seams
+│   ├── deslop-reduce/            # delete code, prove the same result
+│   └── tao-method/               # hard problems: playful, rigorous, stunningly simple
+└── projects/
+    └── lineups/                  # Lineups-stack skills that extend the general ones
 ```
+
+Project skills in `projects/<project>/skills/` extend a general skill and
+name their project in the description, so they trigger only there. Install
+them next to the general skills they extend.
 
 ## Using the guidelines
 
@@ -60,6 +70,19 @@ Test a new skill against at least two real prompts before keeping it.
   [leopiney/linus-torvalds-skills](https://github.com/leopiney/linus-torvalds-skills)
   (MIT).
 - `AGENTS.md` pruned from my per-project instruction files.
+- `skills/deslop-organize` borrows its module vocabulary (depth, seam,
+  locality, the deletion test) from Matt Pocock's
+  [codebase-design](https://github.com/mattpocock/skills/tree/main/skills/engineering/codebase-design)
+  and
+  [improve-codebase-architecture](https://github.com/mattpocock/skills/tree/main/skills/engineering/improve-codebase-architecture)
+  skills, which build on John Ousterhout's *A Philosophy of Software Design*.
+- The deslop skills also draw on Kent Beck's rules of simple design, Martin
+  Fowler's refactoring catalog, Michael Feathers' characterization tests,
+  Knuth and Lamport on code as explanation, and Linux kernel documentation
+  practice.
+- `skills/tao-method` distills Terence Tao's
+  [career advice](https://terrytao.wordpress.com/career-advice/) and
+  problem-solving posts.
 
 ## License
 
